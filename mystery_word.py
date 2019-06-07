@@ -23,7 +23,23 @@ def game_menu():
     
 game_menu()
 
-def 
+#get a wordlist for the selected difficulty. 1 = 4-6 letter word list, 2 = 6-8 letter word list, >3 = 8 letters or more
+def get_word_list(difficulty_mode, file="words.txt"):
+    if difficulty_mode == 1:
+        difficulty_range = range(4,7)
+    elif difficulty_mode == 2:
+        difficulty_range = range(6,9)
+    else:
+        difficulty_range = range(8,50)
+
+    with open(file, "r") as wordlist:
+        game_word_list = [
+        word.strip().lower()
+        for word in list(wordlist)
+        if len(word.strip()) in difficulty_range
+        ]
+    return game_word_list
+
 
 # difficulty_mode = difficulty_mode
 # def pick_mode(difficulty_mode):
