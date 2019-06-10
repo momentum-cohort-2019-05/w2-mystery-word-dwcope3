@@ -33,16 +33,18 @@ def get_word_list(difficulty_mode, file="words.txt"):
 
     with open(file, "r") as word_list:
         game_word_list = [
-        word.strip().lower()
+        word.strip().upper()
         for word in list(word_list.readlines())
         if len(word.strip()) in difficulty_range
         ]
     return game_word_list
 
-def pick_word(word_list):
+#select a random word from created word_list
+def pick_mystery_word(word_list):
     mystery_word = (random.choice(word_list))
     return mystery_word
 
+#function to input a guess for the selected myster word.  If input is longer than 1 character, print "one at a time"
 def input_guess(mystery_word):
     while True:
         guess = input("Guess a letter: ").upper()
@@ -51,23 +53,26 @@ def input_guess(mystery_word):
         else:
             print("Only one letter at a time!")
 
+#make a list of guesses, that appends each input guess to the list
 def make_guess_list(guess):
     while True:
         guess_list.append(guess)
         return guess_list
 
+# conditionally display a letter.  if the letter is already in the list guess_list, then return it.  otherwise return "_"
 def display_letter(guess, all_guesses):
     if guess in all_guesses:
         return guess
     else:
         return "_"
 
+#
 def print_word(word, guesses):
     output_letters = [display_letter(guess, guesses) for guess in word]
     return(" ".join(output_letters))
 
-def end_game(word_display):
-    if "_" in str(word_display):
+def end_game(display_word):
+    if "_" in str(display_word):
         return True
     else: 
         print("You Win!")
@@ -77,7 +82,7 @@ def end_game(word_display):
 if __name__ == "__main__":
     difficulty_mode = game_menu()
     word_list = get_word_list(difficulty_mode)
-    mystery_word = pick_word(word_list)
+    mystery_word = pick_mystery_word(word_list)
     letters_in_word = True
     game_session = True
     guess_list = []
