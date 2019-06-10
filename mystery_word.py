@@ -21,7 +21,6 @@ def game_menu():
         else:
             print("Congratulations!, You have entered an invalid input.  Your hard drive will now erase itself.")
     
-game_menu()
 
 #get a wordlist for the selected difficulty. 1 = 4-6 letter word list, 2 = 6-8 letter word list, >3 = 8 letters or more
 def get_word_list(difficulty_mode, file="words.txt"):
@@ -54,7 +53,7 @@ def input_guess(mystery_word):
 
 def make_guess_list(guess):
     while True:
-        guess_list == guess_list.append(guess)
+        guess_list.append(guess)
         return guess_list
 
 def display_letter(guess, all_guesses):
