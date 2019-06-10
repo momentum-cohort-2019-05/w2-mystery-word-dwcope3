@@ -3,15 +3,15 @@ import random
 #define function to begin game/ display game menu
 def game_menu():
     print("\n")
-    print("?"*60)
-    print("\n" + '{:^60}'.format("Let's Play") + "\n")
-    print("\n" + '{:^60}'.format("Mystery Word"))
-    print("\n" + "?"*60 + "\n")
-    print('{:^60}'.format("Choose Your Difficulty:"))
-    print('{:^60}'.format("1 - Easy"))
-    print('{:^60}'.format("2 - Normal"))
-    print('{:^60}'.format("3 - Hard"))
-    print('{:^60}'.format("4 - Evil Mode >:-|"))
+    print("*"*40)
+    print("\n" + '{:^40}'.format("Let's Play") + "\n")
+    print("\n" + '{:^40}'.format("Mystery Word"))
+    print("\n" + "*"*40 + "\n")
+    print('{:^40}'.format("Choose Your Difficulty:"))
+    print('{:^40}'.format("1 - Easy"))
+    print('{:^40}'.format("2 - Normal"))
+    print('{:^40}'.format("3 - Hard"))
+    print('{:^40}'.format("4 - Evil Mode >:-|"))
     print("\n")
 #While loop keeps running while input stays between 1-4. if anything else is entered, an error message is displayed
     while True:
@@ -32,17 +32,64 @@ def get_word_list(difficulty_mode, file="words.txt"):
     else:
         difficulty_range = range(8,50)
 
-    with open(file, "r") as wordlist:
+    with open(file, "r") as word_list:
         game_word_list = [
         word.strip().lower()
-        for word in list(wordlist)
+        for word in list(word_list.readlines())
         if len(word.strip()) in difficulty_range
         ]
     return game_word_list
 
+def pick_word(word_list):
+    mystery_word = (random.choice(word_list))
+    return mystery_word
 
-# difficulty_mode = difficulty_mode
-# def pick_mode(difficulty_mode):
-#     if difficulty_mode == 1:
-#         word_mystery_gamy(file)
+def input_guess(mystery_word):
+    while True:
+        guess = input("Guess a letter: ").upper()
+        if len(guess) == 1: 
+            return guess
+        else:
+            print("Only one letter at a time!")
 
+def make_guess_list(guess):
+    while True:
+        guess_list == guess_list.append(guess)
+        return guess_list
+
+def display_letter(guess, all_guesses):
+    if guess in all_guesses:
+        return guess
+    else:
+        return "_"
+
+def print_word(word, guesses):
+    output_letters = [display_letter(guess, guesses) for guess in word]
+    return(" ".join(output_letters))
+
+def end_game(word_display):
+    if "_" in str(word_display):
+        return True
+    else: 
+        print("You Win!")
+        return False
+
+
+if __name__ == "__main__":
+    difficulty_mode = game_menu()
+    word_list = get_word_list(difficulty_mode)
+    mystery_word = pick_word(word_list)
+    letters_in_word = True
+    game_session = True
+    guess_list = []
+    while game_session:
+        word = mystery_word
+        print(word)
+        if letters_in_word:
+            print("Your Mystery Word has", len(word), "letters.")
+        current_guess = input_guess(mystery_word)
+        all_guesses = make_guess_list(current_guess)
+        print("Your Guesses:", all_guesses)
+        [display_letter(guess, all_guesses) for guess in word]
+        display_word = print_word(word, all_guesses)
+        print(display_word)
